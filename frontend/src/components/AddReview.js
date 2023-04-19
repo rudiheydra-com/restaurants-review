@@ -16,18 +16,18 @@ const AddReview = (props) => {
   const [submitted, setSubmitted] = useState(false);
   const { id } = useParams();
   const { appState, dispatch } = useAppState();
-  const { isLoggedIn, review: appReview } = appState;
+  const { isLoggedIn, review: appReview = {} } = appState;
 
   useEffect(() => {
-    if (
-      props.location &&
-      props.location.state &&
-      props.location.state.currentReview
-    ) {
-      const { id, name, rating, comments } = props.location.state.currentReview;
-      setReview({ id, name, rating, comments });
-    }
-  }, [props.location]);
+    dispatch(
+      updateReview({
+        name: "",
+        rating: "",
+        comments: "",
+        id: null,
+      })
+    );
+  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -37,14 +37,14 @@ const AddReview = (props) => {
 
   const saveReview = () => {
     let data = {
-      name: review.name,
-      rating: review.rating,
-      comments: review.comments,
+      name: appReview.name,
+      rating: appReview.rating,
+      comments: appReview.comments,
       restaurant_id: id,
     };
 
-    if (review.id) {
-      data.id = review.id;
+    if (appReview.id) {
+      data.id = appReview.id;
       RestaurantDataService.updateReview(data)
         .then(() => {
           setSubmitted(true);
