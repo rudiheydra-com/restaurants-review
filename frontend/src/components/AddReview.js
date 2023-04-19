@@ -94,7 +94,7 @@ const AddReview = (props) => {
                   className="form-control"
                   id="name"
                   required
-                  value={appReview.name}
+                  value={appReview.name || ""}
                   onChange={handleInputChange}
                   name="name"
                 />
@@ -106,7 +106,7 @@ const AddReview = (props) => {
                   className="form-control"
                   id="comments"
                   required
-                  value={appReview.comments}
+                  value={appReview.comments || ""}
                   onChange={handleInputChange}
                   name="comments"
                 />
